@@ -1,0 +1,22 @@
+version: "2"
+services:
+  mongo:
+    image: mongo
+    ports:
+      - 27017:27017
+
+  redis:
+    image: redis
+
+  server:
+    image: node
+    ports:
+      - 3000:3000
+    volumes:
+      - ./server:/app
+    env_file: "server/.env"
+    working_dir: /app
+    command: yarn dev
+    depends_on:
+      - mongo
+      - redis
